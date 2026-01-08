@@ -16,7 +16,7 @@ function Loading() {
   return (
     <div className="fixed inset-0 flex flex-col items-center justify-center gap-6 bg-white/90 backdrop-blur-md z-50">
       {/* Loader */}
-      <CircularProgressWithLabel value={progress} />
+    
 
       {/* Title */}
       <h2 className="text-2xl sm:text-3xl font-bold text-amber-700 animate-pulse">

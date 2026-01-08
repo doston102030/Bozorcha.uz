@@ -11,6 +11,8 @@ function ProductCard({ product }) {
     dispatch(addToCart({ ...product }))
   }
 
+  
+
   return (
     <li
       className="
@@ -32,7 +34,7 @@ function ProductCard({ product }) {
           "
         />
 
-        {/* PRICE BADGE */}
+
         <span
           className="
             absolute top-3 right-3
@@ -44,7 +46,7 @@ function ProductCard({ product }) {
         </span>
       </figure>
 
-      {/* BODY */}
+
       <div className="card-body gap-3">
         <h2 className="card-title text-base text-amber-900 line-clamp-1">
           {title}
@@ -52,7 +54,7 @@ function ProductCard({ product }) {
 
         <p className="text-sm text-amber-700 line-clamp-3">{description}</p>
 
-        {/* ACTION */}
+
         <button
           onClick={addCart}
           className="
