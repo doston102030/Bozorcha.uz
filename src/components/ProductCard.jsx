@@ -22,7 +22,7 @@ function ProductCard({ product }) {
         hover:shadow-2xl hover:-translate-y-2
       "
     >
-      {/* IMAGE */}
+
       <figure className="relative bg-amber-50 rounded-t-2xl py-5 overflow-hidden">
         <img
           src={image}
