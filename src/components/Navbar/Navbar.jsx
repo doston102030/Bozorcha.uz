@@ -16,6 +16,8 @@ function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // const hendeleClick = () => {}
+
   return (
     <header className="sticky top-3 z-50">
       <div className="max-w-7xl mx-auto px-4">
@@ -33,7 +35,6 @@ function Navbar() {
             }
           `}
         >
-
           <Link
             to="/"
             className="text-[24px] font-black tracking-tight text-amber-900"
@@ -41,21 +42,25 @@ function Navbar() {
             Bozorcha<span className="text-orange-500">.uz</span>
           </Link>
 
-          <Link to="/cart" className="ml-auto relative group">
+          <Link to="/Cart" className="ml-auto relative group">
             {cartProducts.length > 0 && (
-              <span className="
+              <span
+                className="
                 absolute -top-1.5 -right-1.5 z-10
                 min-w-[20px] h-[20px] px-1
                 rounded-full bg-red-500 text-white
                 text-[11px] font-bold
                 flex items-center justify-center
                 ring-2 ring-white shadow
-              ">
-                {cartProducts.length > 9 ? '9+' : cartProducts.length}
+              "
+              >
+                {cartProducts.length + '+'}
               </span>
             )}
 
-            <div className="
+            {/* <button onClick={hendeleClick}> */}
+            <div
+              className="
               w-11 h-11 rounded-xl
               bg-amber-600 text-white
               flex items-center justify-center
@@ -63,9 +68,11 @@ function Navbar() {
               group-hover:bg-amber-700
               group-hover:scale-105
               active:scale-95
-            ">
+            "
+            >
               <RiShoppingCartFill size={20} />
             </div>
+            {/* </button> */}
           </Link>
         </div>
       </div>
