@@ -25,6 +25,24 @@ function Cart() {
 
   const handleCheckout = e => {
     e.preventDefault()
+
+  
+    const onlyNums = formData.phone.replace(/\D/g, '')
+
+    if (onlyNums.length < 9) {
+      return toast.error(
+        "Iltimos, telefon raqamini to'liq kiriting (kamida 9 ta raqam)!",
+        {
+          style: {
+            borderRadius: '12px',
+            background: '#ef4444',
+            color: '#fff',
+            fontWeight: 'bold',
+          },
+        }
+      )
+    }
+
     dispatch(setOrder({ ...formData, items: cartProduct, total: totalPrice }))
     dispatch(clearCart())
     toast.success(`Buyurtmangiz qabul qilindi!`, {
@@ -34,7 +52,6 @@ function Cart() {
   }
 
   return (
-  
     <div className="min-h-screen bg-amber-50 py-6 md:py-12 px-4 font-sans overflow-x-hidden">
       <Toaster position="top-center" />
 
@@ -55,15 +72,12 @@ function Cart() {
 
       {cartProduct.length > 0 ? (
         <div className="max-w-5xl mx-auto space-y-8">
-        
           <div className="grid gap-4">
             {cartProduct.map(product => (
               <div
                 key={product.id}
-             
                 className="bg-white rounded-2xl md:rounded-3xl p-4 md:p-6 flex flex-col md:flex-row items-center gap-4 md:gap-8 shadow-sm border border-[#F1F5F9] w-full overflow-hidden"
               >
-               
                 <div className="w-32 h-32 flex-shrink-0 bg-white border border-[#F1F5F9] rounded-2xl p-2">
                   <img
                     src={product.image}
@@ -127,7 +141,7 @@ function Cart() {
             ))}
           </div>
 
-        
+   
           <div className="max-w-xl mx-auto bg-[#0F172A] text-white rounded-[24px] md:rounded-[40px] p-6 md:p-10 shadow-2xl">
             <h2 className="text-lg md:text-xl font-bold mb-6 text-center text-white/90 uppercase tracking-widest">
               Tasdiqlash
@@ -142,15 +156,20 @@ function Cart() {
                 }
                 className="w-full bg-white/5 border border-white/10 px-5 py-4 rounded-xl outline-none focus:border-blue-500 transition-all"
               />
+
               <input
                 required
+                type="text"
                 placeholder="+998"
                 value={formData.phone}
-                onChange={e =>
-                  setFormData({ ...formData, phone: e.target.value })
-                }
-                className="w-full bg-white/5 border border-white/10 px-5 py-4 rounded-xl outline-none focus:border-blue-500 transition-all"
+                onChange={e => {
+           
+                  const val = e.target.value.replace(/[^0-9+]/g, '')
+                  setFormData({ ...formData, phone: val })
+                }}
+                className="w-full bg-white/5 border border-white/10 px-5 py-4 rounded-xl outline-none focus:border-blue-500 transition-all placeholder:text-white/20"
               />
+
               <input
                 required
                 placeholder="Manzilingiz"
@@ -160,6 +179,7 @@ function Cart() {
                 }
                 className="w-full bg-white/5 border border-white/10 px-5 py-4 rounded-xl outline-none focus:border-blue-500 transition-all"
               />
+
               <div className="flex flex-col sm:flex-row items-center justify-between mt-8 pt-6 border-t border-white/10 gap-4">
                 <div className="text-center sm:text-left">
                   <p className="text-white/40 text-[10px] uppercase font-bold">
@@ -180,8 +200,7 @@ function Cart() {
           </div>
         </div>
       ) : (
-     
-        <div className="max-w-xl mx-auto text-center py-20 bg-white rounded-[32px] border border-[#F1F5F9] shadow-sm">
+        <div className="max-w-xl mx-auto text-center py-20 bg-white rounded-[32px] border border-[#F1F5F9] shadow-sm px-4">
           <p className="text-[#64748B] text-lg mb-8 font-medium">
             Savatchangiz bo'sh
           </p>
