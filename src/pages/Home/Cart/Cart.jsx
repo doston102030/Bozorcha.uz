@@ -17,6 +17,7 @@ function Cart() {
     phone: '',
     address: '',
   })
+
   const totalPrice = cartProduct.reduce(
     (acc, item) => acc + item.price * item.amount,
     0
@@ -33,36 +34,38 @@ function Cart() {
   }
 
   return (
-    <div className="min-h-screen bg-amber-50 py-12 px-4 font-sans">
+    // overflow-x-hidden qo'shildi - gorizontal scrollni taqiqlaydi
+    <div className="min-h-screen bg-amber-50 py-6 md:py-12 px-4 font-sans overflow-x-hidden">
       <Toaster position="top-center" />
 
-      {/* 1. HEADER */}
-      <div className="max-w-5xl mx-auto flex items-center justify-between mb-10 px-2">
-        <h3 className="text-3xl font-black text-[#0F172A] flex items-center gap-4">
+      {/* HEADER */}
+      <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
+        <h3 className="text-2xl md:text-3xl font-black text-[#0F172A] flex items-center gap-4">
           Savatcha{' '}
           <span className="bg-amber-800 text-white text-sm py-1.5 px-4 rounded-full">
             {cartProduct.length}
           </span>
         </h3>
-       <button
-  onClick={() => (window.location.href = '/')}
-  className="text-[11px] font-black text-amber-900 bg-amber-100 hover:bg-amber-200 px-6 py-3 rounded-xl uppercase tracking-[0.15em] transition-all duration-300 shadow-[0_10px_20px_rgba(217,119,6,0.2)] hover:shadow-[0_15px_25px_rgba(217,119,6,0.3)] active:scale-95 border border-amber-200/50"
->
-  Xaridni Davom ettirish
-</button>
+        <button
+          onClick={() => (window.location.href = '/')}
+          className="w-full sm:w-auto text-[10px] md:text-[11px] font-black text-amber-900 bg-amber-100 hover:bg-amber-200 px-6 py-3 rounded-xl uppercase tracking-[0.15em] transition-all shadow-md active:scale-95 border border-amber-200/50"
+        >
+          Xaridni Davom ettirish
+        </button>
       </div>
 
       {cartProduct.length > 0 ? (
-        <div className="max-w-5xl mx-auto space-y-12">
-        
-          <div className="grid gap-6">
+        <div className="max-w-5xl mx-auto space-y-8">
+          {/* PRODUCT LIST */}
+          <div className="grid gap-4">
             {cartProduct.map(product => (
               <div
                 key={product.id}
-                className="bg-white rounded-3xl p-7 flex items-center gap-8 shadow-sm border border-[#F1F5F9] hover:shadow-md transition-all"
+                // w-full va overflow-hidden qo'shildi
+                className="bg-white rounded-2xl md:rounded-3xl p-4 md:p-6 flex flex-col md:flex-row items-center gap-4 md:gap-8 shadow-sm border border-[#F1F5F9] w-full overflow-hidden"
               >
-              
-                <div className="w-32 h-32 flex-shrink-0 bg-white border border-[#F1F5F9] rounded-2xl p-3">
+                {/* Image */}
+                <div className="w-32 h-32 flex-shrink-0 bg-white border border-[#F1F5F9] rounded-2xl p-2">
                   <img
                     src={product.image}
                     alt={product.title}
@@ -70,30 +73,47 @@ function Cart() {
                   />
                 </div>
 
-           
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-bold text-[#1E293B] text-lg mb-2 truncate">
+                {/* Content - min-w-0 juda muhim (truncate ishlashi uchun) */}
+                <div className="flex-1 min-w-0 w-full text-center md:text-left">
+                  <h3 className="font-bold text-[#1E293B] text-lg mb-1 truncate px-2 md:px-0">
                     {product.title}
                   </h3>
-                  <p className="text-[#64748B] text-sm line-clamp-2 mb-4 leading-relaxed">
+                  <p className="text-[#64748B] text-xs md:text-sm line-clamp-2 mb-3 leading-relaxed">
                     {product.description}
                   </p>
-                  <p className="text-[#2563EB] font-black text-lg">
-                    ${product.price.toLocaleString()}
+                  <p className="text-[#2563EB] font-black text-xl">
+                    ${product.price}
                   </p>
                 </div>
 
-            
-                <div className="flex flex-col items-end justify-between h-32 py-1">
-                 
+                {/* Controls */}
+                <div className="flex flex-row md:flex-col items-center justify-between w-full md:w-auto gap-4 border-t md:border-t-0 pt-4 md:pt-0">
+                  <div className="flex items-center bg-[#F1F5F9] rounded-xl border border-[#E2E8F0] p-1">
+                    <button
+                      onClick={() => dispatch(decreaseAmount(product.id))}
+                      className="w-10 h-10 flex items-center justify-center text-xl font-bold bg-white rounded-lg shadow-sm text-red-500 active:scale-90 transition-transform"
+                    >
+                      −
+                    </button>
+                    <span className="w-10 text-center font-black text-[#0F172A]">
+                      {product.amount}
+                    </span>
+                    <button
+                      onClick={() => dispatch(increaseAmount(product.id))}
+                      className="w-10 h-10 flex items-center justify-center text-xl font-bold bg-white rounded-lg shadow-sm text-[#2563EB] active:scale-90 transition-transform"
+                    >
+                      +
+                    </button>
+                  </div>
+
                   <button
                     onClick={() => dispatch(removeFromCart(product.id))}
-                    className="group p-2 -mr-2 text-[#CBD5E1] text-red-500 transition-all transform hover:scale-110"
+                    className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
+                      width="20"
+                      height="20"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -106,56 +126,35 @@ function Cart() {
                       />
                     </svg>
                   </button>
-
-                  <div className="flex items-center bg-[#F1F5F9] rounded-xl border border-[#E2E8F0] p-1.5 shadow-inner">
-                    <button
-                      onClick={() => dispatch(decreaseAmount(product.id))}
-                      className="w-10 h-10 flex items-center justify-center text-2xl font-medium bg-white rounded-lg shadow-sm text-red-500 active:bg-red-50 transition-all"
-                    >
-                      −
-                    </button>
-                    <span className="w-12 text-center font-black text-base text-[#0F172A]">
-                      {product.amount}
-                    </span>
-                    <button
-                      onClick={() => dispatch(increaseAmount(product.id))}
-                      className="w-10 h-10 flex items-center justify-center text-2xl font-medium bg-white rounded-lg shadow-sm  text-[#2563EB] active:bg-blue-50 transition-all"
-                    >
-                      +
-                    </button>
-                  </div>
                 </div>
               </div>
             ))}
           </div>
 
-          
-          <div className="max-w-xl mx-auto bg-[#0F172A] text-white rounded-[20px] p-10 shadow-2xl">
-            <h2 className="text-xl font-bold mb-8 text-center text-white/90 uppercase tracking-[0.3em]">
-              Xaridni tasdiqlash
+          {/* CHECKOUT FORM */}
+          <div className="max-w-xl mx-auto bg-[#0F172A] text-white rounded-[24px] md:rounded-[40px] p-6 md:p-10 shadow-2xl">
+            <h2 className="text-lg md:text-xl font-bold mb-6 text-center text-white/90 uppercase tracking-widest">
+              Tasdiqlash
             </h2>
-
-            <form onSubmit={handleCheckout} className="space-y-5">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <input
-                  required
-                  placeholder="Ismingiz"
-                  value={formData.fullName}
-                  onChange={e =>
-                    setFormData({ ...formData, fullName: e.target.value })
-                  }
-                  className="w-full bg-white/5 border border-white/10 px-5 py-4 rounded-2xl text-base outline-none focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB] transition-all placeholder:text-white/20"
-                />
-                <input
-                  required
-                  placeholder="+998"
-                  value={formData.phone}
-                  onChange={e =>
-                    setFormData({ ...formData, phone: e.target.value })
-                  }
-                  className="w-full bg-white/5 border border-white/10 px-5 py-4 rounded-2xl text-base outline-none focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB] transition-all placeholder:text-white/20"
-                />
-              </div>
+            <form onSubmit={handleCheckout} className="space-y-4">
+              <input
+                required
+                placeholder="Ismingiz"
+                value={formData.fullName}
+                onChange={e =>
+                  setFormData({ ...formData, fullName: e.target.value })
+                }
+                className="w-full bg-white/5 border border-white/10 px-5 py-4 rounded-xl outline-none focus:border-blue-500 transition-all"
+              />
+              <input
+                required
+                placeholder="+998"
+                value={formData.phone}
+                onChange={e =>
+                  setFormData({ ...formData, phone: e.target.value })
+                }
+                className="w-full bg-white/5 border border-white/10 px-5 py-4 rounded-xl outline-none focus:border-blue-500 transition-all"
+              />
               <input
                 required
                 placeholder="Manzilingiz"
@@ -163,21 +162,20 @@ function Cart() {
                 onChange={e =>
                   setFormData({ ...formData, address: e.target.value })
                 }
-                className="w-full bg-white/5 border border-white/10 px-5 py-4 rounded-2xl text-base outline-none focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB] transition-all placeholder:text-white/20"
+                className="w-full bg-white/5 border border-white/10 px-5 py-4 rounded-xl outline-none focus:border-blue-500 transition-all"
               />
-
-              <div className="flex items-center justify-between mt-10 pt-8 border-t border-white/10">
-                <div>
-                  <p className="text-white/40 text-[11px] uppercase font-bold mb-1 tracking-wider">
-                    Umumiy summa:
+              <div className="flex flex-col sm:flex-row items-center justify-between mt-8 pt-6 border-t border-white/10 gap-4">
+                <div className="text-center sm:text-left">
+                  <p className="text-white/40 text-[10px] uppercase font-bold">
+                    Summa:
                   </p>
-                  <p className="text-3xl font-black text-white">
+                  <p className="text-2xl font-black">
                     ${totalPrice.toFixed(2)}
                   </p>
                 </div>
                 <button
                   type="submit"
-                  className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-10 py-4 rounded-2xl font-bold text-sm uppercase tracking-widest transition-all active:scale-95 shadow-xl shadow-blue-500/20"
+                  className="w-full sm:w-auto bg-[#2563EB] hover:bg-blue-600 px-10 py-4 rounded-xl font-bold uppercase tracking-widest transition-all active:scale-95"
                 >
                   Tasdiqlash
                 </button>
@@ -186,13 +184,14 @@ function Cart() {
           </div>
         </div>
       ) : (
-        <div className="max-w-xl  mx-auto text-center py-24 bg-white rounded-[40px] border border-[#F1F5F9] shadow-sm">
-          <p className="text-[#64748B] text-xl mb-8 font-medium">
+        /* EMPTY STATE */
+        <div className="max-w-xl mx-auto text-center py-20 bg-white rounded-[32px] border border-[#F1F5F9] shadow-sm">
+          <p className="text-[#64748B] text-lg mb-8 font-medium">
             Savatchangiz bo'sh
           </p>
           <button
             onClick={() => (window.location.href = '/')}
-            className="bg-[#0F172A] text-white px-12 py-4 rounded-2xl font-bold text-sm uppercase tracking-widest hover:bg-[#2563EB] transition-all shadow-lg"
+            className="bg-[#0F172A] text-white px-10 py-4 rounded-xl font-bold uppercase hover:bg-blue-600 transition-all"
           >
             Xaridni boshlash
           </button>
