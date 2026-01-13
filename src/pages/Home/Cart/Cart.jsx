@@ -34,11 +34,10 @@ function Cart() {
   }
 
   return (
-    // overflow-x-hidden qo'shildi - gorizontal scrollni taqiqlaydi
+  
     <div className="min-h-screen bg-amber-50 py-6 md:py-12 px-4 font-sans overflow-x-hidden">
       <Toaster position="top-center" />
 
-      {/* HEADER */}
       <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
         <h3 className="text-2xl md:text-3xl font-black text-[#0F172A] flex items-center gap-4">
           Savatcha{' '}
@@ -56,15 +55,15 @@ function Cart() {
 
       {cartProduct.length > 0 ? (
         <div className="max-w-5xl mx-auto space-y-8">
-          {/* PRODUCT LIST */}
+        
           <div className="grid gap-4">
             {cartProduct.map(product => (
               <div
                 key={product.id}
-                // w-full va overflow-hidden qo'shildi
+             
                 className="bg-white rounded-2xl md:rounded-3xl p-4 md:p-6 flex flex-col md:flex-row items-center gap-4 md:gap-8 shadow-sm border border-[#F1F5F9] w-full overflow-hidden"
               >
-                {/* Image */}
+               
                 <div className="w-32 h-32 flex-shrink-0 bg-white border border-[#F1F5F9] rounded-2xl p-2">
                   <img
                     src={product.image}
@@ -72,8 +71,6 @@ function Cart() {
                     className="w-full h-full object-contain"
                   />
                 </div>
-
-                {/* Content - min-w-0 juda muhim (truncate ishlashi uchun) */}
                 <div className="flex-1 min-w-0 w-full text-center md:text-left">
                   <h3 className="font-bold text-[#1E293B] text-lg mb-1 truncate px-2 md:px-0">
                     {product.title}
@@ -86,7 +83,6 @@ function Cart() {
                   </p>
                 </div>
 
-                {/* Controls */}
                 <div className="flex flex-row md:flex-col items-center justify-between w-full md:w-auto gap-4 border-t md:border-t-0 pt-4 md:pt-0">
                   <div className="flex items-center bg-[#F1F5F9] rounded-xl border border-[#E2E8F0] p-1">
                     <button
@@ -131,7 +127,7 @@ function Cart() {
             ))}
           </div>
 
-          {/* CHECKOUT FORM */}
+        
           <div className="max-w-xl mx-auto bg-[#0F172A] text-white rounded-[24px] md:rounded-[40px] p-6 md:p-10 shadow-2xl">
             <h2 className="text-lg md:text-xl font-bold mb-6 text-center text-white/90 uppercase tracking-widest">
               Tasdiqlash
@@ -184,7 +180,7 @@ function Cart() {
           </div>
         </div>
       ) : (
-        /* EMPTY STATE */
+     
         <div className="max-w-xl mx-auto text-center py-20 bg-white rounded-[32px] border border-[#F1F5F9] shadow-sm">
           <p className="text-[#64748B] text-lg mb-8 font-medium">
             Savatchangiz bo'sh
