@@ -39,7 +39,6 @@ const productsSlice = createSlice({
       }
       localStorage.setItem('cartProducts', JSON.stringify(state))
     },
-    // Mana shu funksiya sizda rasmda yo'q edi, qo'shib qo'ying:
     clearCart: (state) => {
       localStorage.removeItem('cartProducts')
       return []
